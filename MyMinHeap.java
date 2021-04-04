@@ -1,4 +1,4 @@
-import java.util.*;
+import java.util.Arrays;
 
 public class MyMinHeap implements IMinHeap{
 
@@ -27,45 +27,68 @@ public class MyMinHeap implements IMinHeap{
     public void insert(int x) {
         this.heapArray[heapSize] = x; 
         this.heapSize++; 
-        
+        upHeap();
     }
 
     @Override
     public void remove() {
-        // TODO Auto-generated method stub
-        
+        if (this.heapSize > 0) {
+            swap(0,this.heapSize - 1);
+            heapSize--;
+            downHeap();
+        }
     }
 
     @Override
-    public void replace() {
-        // TODO Auto-generated method stub
-        
+    public void replace(int replacementItem) {
+        if (this.heapSize > 0) {
+            this.heapArray[0] = replacementItem;
+            downHeap();
+        } else {
+            insert(replacementItem);
+        }
     }
 
     @Override
-    public void peek() {
-        // TODO Auto-generated method stub
-        
+    public int peek() {
+        return this.heapSize > 0 ? this.heapArray[0] : 0;
     }
 
     @Override
     public void load() {
-        // TODO Auto-generated method stub
+        // Not exactly sure how loading is supposed to happen
         
     }
 
     @Override
     public void reHeap() {
-        // TODO Auto-generated method stub
+        // Brand new method required, not built in last year's assignment
         
     }
 
     private void upHeap() {
-
         int index = this.heapSize - 1;
         while(hasParent(index) && getParent(index) > heapArray[index]) {
             swap(getParent(index), index);
             index = getParent(index);
+        }
+    }
+
+    private void downHeap() {
+        int index = 0;
+
+        while (hasLeftChild(index)) {
+            int smallerChildIndex = getLeftChildIndex(index);
+            if (hasRightChild(index) && getRightChild(index) < getLeftChild(index)) {
+                smallerChildIndex = getRightChildIndex(index);
+            }
+
+            if (this.heapArray[index] < this.heapArray[smallerChildIndex]) {
+                break;
+            } else {
+                swap(index,smallerChildIndex);
+            }
+            index = smallerChildIndex;
         }
     }
 
@@ -85,5 +108,10 @@ public class MyMinHeap implements IMinHeap{
     private int getParent (int index) {return heapArray[(index / 2)];}
     private int getLeftChild(int index) {return heapArray[(2 * index)];}
     private int getRightChild(int index) {return heapArray[(2 * index + 1)];}
+
+    // Return index of parent, left or right child index
+    private int getParentIndex (int childIndex) {return (childIndex - 1) / 2;}
+    private int getLeftChildIndex (int parentIndex) {return (parentIndex * 2) + 1; }
+    private int getRightChildIndex (int parentIndex) {return (parentIndex * 2) + 2; }
 
 }
