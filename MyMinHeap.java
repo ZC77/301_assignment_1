@@ -72,15 +72,15 @@ public class MyMinHeap implements IMinHeap{
     }
 
     @Override
-    public void load() {
-        // Not exactly sure how loading is supposed to happen
-        
+    public void load(String[] paramArray) {
+        for(int i = 0; i < this.heapArray.length - 1; i++) {
+            this.heapArray[i] = paramArray[i];
+        }
+        reHeap();
     }
 
     @Override
     public void reHeap() {
-        // Brand new method required, not built in last year's assignment.. (In progress)
-
         int lastParentIndex = (this.heapSize / 2) - 1; 
 
         for (int x = lastParentIndex ; x >= 0; x--) {
@@ -93,9 +93,7 @@ public class MyMinHeap implements IMinHeap{
             }
     
             lastParentIndex--;
-
         }
-        
     }
 
     private void upHeap() {

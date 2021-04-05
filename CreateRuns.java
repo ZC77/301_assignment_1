@@ -50,6 +50,7 @@ public class CreateRuns {
         MyMinHeap heap = new MyMinHeap();
         heap.load(tmpArray);
 
+        
         //Read in a line
         //Check (using compareto) - checking if it is smaller that the top
         //Output the smallest element into standard output
