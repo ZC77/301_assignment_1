@@ -1,12 +1,9 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.FileReader;
 import java.io.*;
 
 public class CreateRuns {
 
     private int runHeapSize;
-    private String[] tmpArray;
+    private String[] unsortedLinesArray;
     private int index = 0;
 
     public static void main(String[] args) {
@@ -18,7 +15,7 @@ public class CreateRuns {
     public void start(String[] args) {
         try {
             runHeapSize = Integer.parseInt(args[0]);
-            tmpArray = new String[runHeapSize];
+            unsortedLinesArray = new String[runHeapSize];
 
         } catch (Exception e) {
             System.out.println("Invalid input");
@@ -31,11 +28,11 @@ public class CreateRuns {
             while ((line = reader.readLine()) != null) {
                 //If the array is not full yet, add a line of data
                 if (index < runHeapSize) {
-                    tmpArray[index] = line;
+                    unsortedLinesArray[index] = line;
                     index++;
                 }
                 //If the array is filled
-                if (index == runHeapSize) {
+                if (index.equals(runHeapSize)) {
                     run(reader);
                     return;
                 }
@@ -48,9 +45,33 @@ public class CreateRuns {
     //Create a heap and loading the tmp array
     public void run(BufferedReader reader) {
         MyMinHeap heap = new MyMinHeap();
-        heap.load(tmpArray);
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out)); 
+        heap.load(unsortedLinesArray);
+
+        try{
+            // 1 iteration - get the smallest item in the heap, and put it into our output run
+            String smallestInHeap = heap.peek();
+
+            writer.write(smallestInHeap);
+
+            heap.insert(reader.readLine());
+
+            writer.write(smallestInHeap);
+
+            //
+
+        } catch (Exception e) {
+            
+        }
+        
 
         
+        //1. Pop the heap
+        //2. Make comparison with smallest (peek compared to next item in InputR)
+        //3. If bigger, then add to end of heap.
+        //4. If smaller, qurantine value, remove, then decrement heap size
+        //5. 
+
         //Read in a line
         //Check (using compareto) - checking if it is smaller that the top
         //Output the smallest element into standard output
