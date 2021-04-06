@@ -56,18 +56,22 @@ public class CreateRuns {
             heap.printHeap();
             String smallestInHeap = heap.peek(); // Peek smallest value at top
             String previousLineInRun = smallestInHeap; //Set smallest in heap as tmp last in run
-            
-            while (reader.readLine() != null) {
+            String nextLineInput = "placeholder";
+
+            while (nextLineInput != null) {
 
                 while (heap.heapSize != 0) { // While elements still need to be process (not at the end of the current run)
                     //If smallest in heap can go as the next element in the run
                     if (smallestInHeap.compareTo(previousLineInRun) >= 0) {
                         writer.write(smallestInHeap);
-                        System.out.println(smallestInHeap);
+                        System.out.println("Added to RUN: " + smallestInHeap + " | Current heap size: " + heap.heapSize);
                         previousLineInRun = smallestInHeap;
-                        heap.replace(reader.readLine());
+                        nextLineInput = reader.readLine();
+                        heap.replace(nextLineInput);
+                        System.out.println("Added to HEAP: " + nextLineInput);
                     } else {
                         heap.remove();
+                        System.out.println("Removed from HEAP: " + smallestInHeap);
                     }
                     smallestInHeap = heap.peek();
                 }
@@ -80,7 +84,7 @@ public class CreateRuns {
                 previousLineInRun = smallestInHeap;
 
                 // BREAK CASE: If the next inputted line is null, we are at the end of the file
-                if (reader.readLine() == null) {
+                if (nextLineInput == null) {
                     for (int i = 0; i < heap.heapSize; i++) {
                         writer.write(smallestInHeap);
                         System.out.println(smallestInHeap);
