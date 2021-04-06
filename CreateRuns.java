@@ -60,20 +60,18 @@ public class CreateRuns {
 
                     writer.write(smallestInHeap);
                     System.out.println("Curent SIH: " + smallestInHeap);
+                    
 
                     if (smallestInHeap.compareTo(nextLine) <= 0) {
-                        heap.remove();
-                        heap.insert(nextLine);
-                    } else {
                         heap.replace(nextLine);
-                        heap.swap(0, heap.heapSize - 1);
-                        heap.heapSize--;
-                        heap.reHeap();
+                    } else {
+                        heap.remove();
+                        heap.heapArray[heap.heapSize] = nextLine;
                     }
                     
                     smallestInHeap = heap.peek();
                     nextLine = reader.readLine();
-                    //System.out.println("Just read: " + nextLine);
+                    System.out.println("Just read: " + nextLine);
                 }
 
                 writer.write("RUN FINISHED");
