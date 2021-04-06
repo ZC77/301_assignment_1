@@ -45,17 +45,21 @@ public class CreateRuns {
     //Run replacement selection on the inputted lines to create runs using the heap
     public void run(BufferedReader reader) {
         try{
-            MyMinHeap heap = new MyMinHeap();
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out)); 
-
+            MyMinHeap heap = new MyMinHeap(4);
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
+            
             heap.load(unsortedLinesArray); // Bulk load
-            String smallestInHeap = heap.peek(); // Peek smallest value at top 
+            System.out.println("Bulk loaded to heap");
+
+            String smallestInHeap = heap.peek(); // Peek smallest value at top
             String nextLine = reader.readLine(); // Get the next line value
+            System.out.println("Just 1st LINE read: " + nextLine);
             
             while (nextLine != null) { // While there are still lines to read
                 while(heap.heapSize > 0) { // While there is still space in the heap
 
                     writer.write(smallestInHeap);
+                    System.out.println("Curent SIH: " + smallestInHeap);
 
                     if (smallestInHeap.compareTo(nextLine) <= 0) {
                         heap.remove();
@@ -66,16 +70,21 @@ public class CreateRuns {
                         heap.heapSize--;
                         heap.reHeap();
                     }
+                    
+                    smallestInHeap = heap.peek();
                     nextLine = reader.readLine();
+                    //System.out.println("Just read: " + nextLine);
                 }
 
                 writer.write("RUN FINISHED");
+                System.out.println("Run FINISHED");
+
                 heap.heapSize = heap.heapArray.length;
                 heap.reHeap();
             }
 
         } catch (Exception e) {
-            System.out.println("Error occured" + e);
+            System.out.println("Error occured: " + e);
         }
     }
 }

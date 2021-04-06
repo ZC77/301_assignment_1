@@ -2,12 +2,18 @@ import java.util.Arrays;
 
 public class MyMinHeap implements IMinHeap{
 
+    public MyMinHeap(int HC) {
+        heapCapacity = HC;
+        this.heapArray = new String[heapCapacity];
+    }
+
     private int heapCapacity = 32;
     public int heapSize = 0;
     public String[] heapArray; 
 
+    /*
     public static void main(String[] args) {
-        MyMinHeap heap = new MyMinHeap(); // instantiate the class
+        MyMinHeap heap = new MyMinHeap(32); // instantiate the class
 
         try {
             heap.heapCapacity = Integer.parseInt(args[0]);
@@ -22,6 +28,8 @@ public class MyMinHeap implements IMinHeap{
         }
         heap.heapArray = new String[heap.heapCapacity];
     }
+
+    */
 
     @Override
     public void insert(String x) {
@@ -56,10 +64,18 @@ public class MyMinHeap implements IMinHeap{
 
     @Override
     public void load(String[] paramArray) {
-        for(int i = 0; i < this.heapArray.length - 1; i++) {
-            this.heapArray[i] = paramArray[i];
+        try {
+            for(int i = 0; i < this.heapArray.length; i++) {
+                this.heapArray[i] = paramArray[i];
+            }
+            heapSize = paramArray.length;
+            reHeap();
+
+        } catch (Exception e) {
+
+            System.out.println("Error occured with loading");
         }
-        reHeap();
+
     }
 
     @Override
