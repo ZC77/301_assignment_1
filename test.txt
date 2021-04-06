@@ -1,0 +1,37 @@
+Run 1
+q
+w
+e
+r
+END_OF_RUN
+Run 2
+t
+y
+u
+i
+END_OF_RUN
+Run 3
+o
+p
+a
+s
+END_OF_RUN
+Run 4
+d
+f
+g
+h
+j
+k
+l
+END_OF_RUN
+Run 5
+z
+x
+c
+v
+END_OF_RUN
+Run 6
+b
+n
+m

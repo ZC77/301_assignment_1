@@ -2,12 +2,18 @@ import java.util.Arrays;
 
 public class MyMinHeap implements IMinHeap{
 
-    private int heapCapacity = 32;
-    private int heapSize = 0;
-    private int[] heapArray; 
+    public MyMinHeap(int HC) {
+        heapCapacity = HC;
+        this.heapArray = new String[heapCapacity];
+    }
 
+    private int heapCapacity = 32;
+    public int heapSize = 0;
+    public String[] heapArray; 
+
+    /*
     public static void main(String[] args) {
-        MyMinHeap heap = new MyMinHeap(); // instantiate the class
+        MyMinHeap heap = new MyMinHeap(32); // instantiate the class
 
         try {
             heap.heapCapacity = Integer.parseInt(args[0]);
@@ -20,28 +26,13 @@ public class MyMinHeap implements IMinHeap{
         } catch (Exception e) {
             System.out.println("Usage: MyMinHeap [heap array size] \n Array size over 10000 not accepted.");
         }
-        heap.heapArray = new int[heap.heapCapacity];
-
-        heap.insert(5);
-        heap.insert(345);
-        heap.insert(234);
-        heap.insert(1);
-        heap.insert(63);
-        heap.insert(7233);
-        heap.insert(435);
-        heap.insert(214);
-        heap.insert(7134);
-        heap.insert(525);
-
-        for (int i = 0; i < heap.heapArray.length; i++) {
-            System.out.print(heap.heapArray[i] + " ");
-            
-        }
-        System.out.println("");
+        heap.heapArray = new String[heap.heapCapacity];
     }
 
+    */
+
     @Override
-    public void insert(int x) {
+    public void insert(String x) {
         this.heapArray[heapSize] = x; 
         this.heapSize++; 
         upHeap();
@@ -57,7 +48,7 @@ public class MyMinHeap implements IMinHeap{
     }
 
     @Override
-    public void replace(int replacementItem) {
+    public void replace(String replacementItem) {
         if (this.heapSize > 0) {
             this.heapArray[0] = replacementItem;
             downHeap();
@@ -67,40 +58,46 @@ public class MyMinHeap implements IMinHeap{
     }
 
     @Override
-    public int peek() {
-        return this.heapSize > 0 ? this.heapArray[0] : 0;
+    public String peek() {
+        return this.heapSize > 0 ? this.heapArray[0] : "";
     }
 
     @Override
-    public void load() {
-        // Not exactly sure how loading is supposed to happen
-        
+    public void load(String[] paramArray) {
+        try {
+            for(int i = 0; i < this.heapArray.length; i++) {
+                this.heapArray[i] = paramArray[i];
+            }
+            heapSize = paramArray.length;
+            reHeap();
+
+        } catch (Exception e) {
+
+            System.out.println("Error occured with loading");
+        }
+
     }
 
     @Override
     public void reHeap() {
-        // Brand new method required, not built in last year's assignment.. (In progress)
-
         int lastParentIndex = (this.heapSize / 2) - 1; 
 
         for (int x = lastParentIndex ; x >= 0; x--) {
 
-            if (hasRightChild(lastParentIndex) && getRightChild(lastParentIndex) < this.heapArray[lastParentIndex]) {
+            if (hasRightChild(lastParentIndex) && getRightChild(lastParentIndex).compareTo(heapArray[lastParentIndex]) < 0) {
                 swap(getRightChildIndex(lastParentIndex), lastParentIndex);
             }
-            if (hasLeftChild(lastParentIndex) && getLeftChild(lastParentIndex) < this.heapArray[lastParentIndex]) {
+            if (hasLeftChild(lastParentIndex) && getLeftChild(lastParentIndex).compareTo(heapArray[lastParentIndex]) < 0) {
                 swap(getLeftChildIndex(lastParentIndex), lastParentIndex);
             }
     
             lastParentIndex--;
-
         }
-        
     }
 
     private void upHeap() {
         int index = this.heapSize - 1;
-        while(hasParent(index + 1) && getParent(index) > heapArray[index]) {
+        while(hasParent(index + 1) && getParent(index).compareTo(heapArray[index]) > 0) {
             swap(getParentIndex(index), index);
             index = getParentIndex(index);
         }
@@ -111,11 +108,11 @@ public class MyMinHeap implements IMinHeap{
 
         while (hasLeftChild(index)) {
             int smallerChildIndex = getLeftChildIndex(index);
-            if (hasRightChild(index) && getRightChild(index) < getLeftChild(index)) {
+            if (hasRightChild(index) && getRightChild(index).compareTo(getLeftChild(index)) < 0) {
                 smallerChildIndex = getRightChildIndex(index);
             }
 
-            if (this.heapArray[index] < this.heapArray[smallerChildIndex]) {
+            if (this.heapArray[index].compareTo(this.heapArray[smallerChildIndex]) < 0 ) {
                 break;
             } else {
                 swap(index,smallerChildIndex);
@@ -124,8 +121,8 @@ public class MyMinHeap implements IMinHeap{
         }
     }
 
-    private void swap(int a, int b) {
-        int temp = this.heapArray[a];
+    public void swap(int a, int b) {
+        String temp = this.heapArray[a];
 
         this.heapArray[a] = this.heapArray[b];
         this.heapArray[b] = temp;
@@ -137,9 +134,9 @@ public class MyMinHeap implements IMinHeap{
     private boolean hasRightChild(int index) {return ((index + 1) * 2) < this.heapSize;}
 
     //Given an index location, retrieve the value of its; parent, leftchild, rightchild
-    private int getParent (int index) {return heapArray[(index - 1) / 2];}
-    private int getLeftChild(int index) {return heapArray[(2 * index) + 1];}
-    private int getRightChild(int index) {return heapArray[(2 * index) + 2];}
+    private String getParent (int index) {return heapArray[(index - 1) / 2];}
+    private String getLeftChild(int index) {return heapArray[(2 * index) + 1];}
+    private String getRightChild(int index) {return heapArray[(2 * index) + 2];}
 
     // Return index of parent, left or right child index
     private int getParentIndex (int childIndex) {return (childIndex - 1) / 2;}
