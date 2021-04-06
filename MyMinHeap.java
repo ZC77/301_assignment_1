@@ -3,8 +3,8 @@ import java.util.Arrays;
 public class MyMinHeap implements IMinHeap{
 
     private int heapCapacity = 32;
-    private int heapSize = 0;
-    private String[] heapArray; 
+    public int heapSize = 0;
+    public String[] heapArray; 
 
     public static void main(String[] args) {
         MyMinHeap heap = new MyMinHeap(); // instantiate the class
@@ -122,7 +122,7 @@ public class MyMinHeap implements IMinHeap{
         }
     }
 
-    private void swap(int a, int b) {
+    public void swap(int a, int b) {
         String temp = this.heapArray[a];
 
         this.heapArray[a] = this.heapArray[b];

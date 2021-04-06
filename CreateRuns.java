@@ -32,7 +32,7 @@ public class CreateRuns {
                     index++;
                 }
                 //If the array is filled
-                if (index.equals(runHeapSize)) {
+                if (index == runHeapSize) {
                     run(reader);
                     return;
                 }
@@ -42,45 +42,41 @@ public class CreateRuns {
         }
     }
 
-    //Create a heap and loading the tmp array
+    //Run replacement selection on the inputted lines to create runs using the heap
     public void run(BufferedReader reader) {
-        MyMinHeap heap = new MyMinHeap();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out)); 
-        heap.load(unsortedLinesArray);
-
+    
         try{
-            // 1 iteration - get the smallest item in the heap, and put it into our output run
-            String smallestInHeap = heap.peek();
+            MyMinHeap heap = new MyMinHeap();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out)); 
 
-            writer.write(smallestInHeap);
+            heap.load(unsortedLinesArray); // Bulk load
+            String smallestInHeap = heap.peek(); // Peek smallest value at top 
+            String nextLine = reader.readLine(); // Get the next line value
+            
+            while (nextLine != null) { // While there are still lines to read
+                while(heap.heapSize > 0) { // While there is still space in the heap
 
-            heap.insert(reader.readLine());
+                    writer.write(smallestInHeap);
 
-            writer.write(smallestInHeap);
+                    if (smallestInHeap.compareTo(nextLine) <= 0) {
+                        heap.remove();
+                        heap.insert(nextLine);
+                    } else {
+                        heap.replace(nextLine);
+                        heap.swap(0, heap.heapSize - 1);
+                        heap.heapSize--;
+                        heap.reHeap();
+                    }
+                    nextLine = reader.readLine();
+                }
 
-            //
+                writer.write("RUN FINISHED");
+                heap.heapSize = heap.heapArray.length;
+                heap.reHeap();
+            }
 
         } catch (Exception e) {
-            
+            System.out.println("Error occured" + e);
         }
-        
-
-        
-        //1. Pop the heap
-        //2. Make comparison with smallest (peek compared to next item in InputR)
-        //3. If bigger, then add to end of heap.
-        //4. If smaller, qurantine value, remove, then decrement heap size
-        //5. 
-
-        //Read in a line
-        //Check (using compareto) - checking if it is smaller that the top
-        //Output the smallest element into standard output
-
-        //If it is smaller, then append it to the heap + heapsize--
-        //If element is larger, add it to the heap
-        
-        //All while the heap size is not zero (ie, )
-
-        //when the next smallest value that you output
     }
 }
