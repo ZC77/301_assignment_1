@@ -66,9 +66,15 @@ public class CreateRuns {
                         writer.write(smallestInHeap);
                         System.out.println("Added to RUN: " + smallestInHeap + " | Current heap size: " + heap.heapSize);
                         previousLineInRun = smallestInHeap;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// I'm pretty sure these three steps are the culprit for the null pointer exception. When the file reaches the end, nextlineinput is set to null.
+// when ever we make a reference to a null object, it will cause an exception. 
                         nextLineInput = reader.readLine();
                         heap.replace(nextLineInput);
                         System.out.println("Added to HEAP: " + nextLineInput);
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
                     } else {
                         heap.printHeap();
                         heap.remove();

@@ -67,7 +67,6 @@ public class MyMinHeap implements IMinHeap{
     public void remove() {
         if (this.heapSize > 0) {
             swap(0,this.heapSize - 1);
-            System.out.println("Just removed: " + (this.heapSize - 1));
             heapSize--;
             downHeap();
         }
@@ -134,7 +133,7 @@ public class MyMinHeap implements IMinHeap{
     private void downHeap() {
         int index = 0;
 
-        while (hasLeftChild(index)) {
+        while (hasLeftChild(index) && heapSize > 1) {
             int smallerChildIndex = getLeftChildIndex(index);
             if (hasRightChild(index) && getRightChild(index).compareTo(getLeftChild(index)) < 0) {
                 smallerChildIndex = getRightChildIndex(index);
