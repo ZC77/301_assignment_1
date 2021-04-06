@@ -21,23 +21,6 @@ public class MyMinHeap implements IMinHeap{
             System.out.println("Usage: MyMinHeap [heap array size] \n Array size over 10000 not accepted.");
         }
         heap.heapArray = new String[heap.heapCapacity];
-
-        heap.insert("A");
-        heap.insert("D");
-        heap.insert("C");
-        heap.insert("E");
-        heap.insert("G");
-        heap.insert("B");
-        heap.insert("H");
-        heap.insert("F");
-        heap.insert("J");
-        heap.insert("I");
-
-        for (int i = 0; i < heap.heapArray.length; i++) {
-            System.out.print(heap.heapArray[i] + " ");
-            
-        }
-        System.out.println("");
     }
 
     @Override

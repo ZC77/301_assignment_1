@@ -44,7 +44,6 @@ public class CreateRuns {
 
     //Run replacement selection on the inputted lines to create runs using the heap
     public void run(BufferedReader reader) {
-    
         try{
             MyMinHeap heap = new MyMinHeap();
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out)); 
