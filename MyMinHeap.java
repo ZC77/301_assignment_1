@@ -67,6 +67,7 @@ public class MyMinHeap implements IMinHeap{
     public void remove() {
         if (this.heapSize > 0) {
             swap(0,this.heapSize - 1);
+            System.out.println("Just removed: " + (this.heapSize - 1));
             heapSize--;
             downHeap();
         }

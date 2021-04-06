@@ -70,6 +70,7 @@ public class CreateRuns {
                         heap.replace(nextLineInput);
                         System.out.println("Added to HEAP: " + nextLineInput);
                     } else {
+                        heap.printHeap();
                         heap.remove();
                         System.out.println("Removed from HEAP: " + smallestInHeap);
                     }
