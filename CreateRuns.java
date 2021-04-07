@@ -57,7 +57,7 @@ public class CreateRuns {
             String nextLineInput = "p"; // Starting placeholding text to start while loop
             int counter = 1;
 
-            while (nextLineInput != null) {
+            while (heap.heapSize != 0) {
 
                 while (heap.heapSize != 0) { // While elements still need to be process (not at the end of the current run)
                     //If smallest in heap can go as the next element in the run

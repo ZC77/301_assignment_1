@@ -34,13 +34,16 @@ public class MyMinHeap implements IMinHeap{
     public void reset()
     {   
         int nextContiguousSpot = 0;
-        for (int i = 0; i < this.heapArray.length - 1; i++) {
+        for (int i = 0; i < this.heapArray.length; i++) {
             if (heapArray[i] != null) {
                 heapArray[nextContiguousSpot] = heapArray[i];
+                if (i != nextContiguousSpot) {
+                    heapArray[i] = null;
+                }
                 nextContiguousSpot++;
             }
         }
-        this.heapSize = nextContiguousSpot + 1;
+        this.heapSize = nextContiguousSpot;
         reHeap();
 
         /*
