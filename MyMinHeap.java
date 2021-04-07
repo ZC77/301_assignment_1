@@ -31,6 +31,31 @@ public class MyMinHeap implements IMinHeap{
 
     */
 
+    public void reset()
+    {   
+        int nextContiguousSpot = 0;
+        for (int i = 0; i < this.heapArray.length - 1; i++) {
+            if (heapArray[i] != null) {
+                heapArray[nextContiguousSpot] = heapArray[i];
+                nextContiguousSpot++;
+            }
+        }
+        this.heapSize = nextContiguousSpot;
+        reHeap();
+
+        /*
+            Start with contiguous spot = 0
+            For each element in the array:
+                IF element != null
+                    Move to the next contiguous spot
+                    Increment next contiguous spot
+                IF element == null
+                    Ignore
+            heapSize = #contiguous spots filled
+            reheap
+        */
+    }
+
     @Override
     public void insert(String x) {
         this.heapArray[heapSize] = x; 
@@ -51,7 +76,9 @@ public class MyMinHeap implements IMinHeap{
     public void replace(String replacementItem) {
         if (this.heapSize > 0) {
             this.heapArray[0] = replacementItem;
-            downHeap();
+            if (replacementItem != null) {
+                downHeap();
+            }
         } else {
             insert(replacementItem);
         }
@@ -59,7 +86,7 @@ public class MyMinHeap implements IMinHeap{
 
     @Override
     public String peek() {
-        return this.heapSize > 0 ? this.heapArray[0] : "";
+        return this.heapSize > 0 ? this.heapArray[0] : null;
     }
 
     @Override
@@ -106,7 +133,7 @@ public class MyMinHeap implements IMinHeap{
     private void downHeap() {
         int index = 0;
 
-        while (hasLeftChild(index)) {
+        while (hasLeftChild(index) && heapSize > 1) {
             int smallerChildIndex = getLeftChildIndex(index);
             if (hasRightChild(index) && getRightChild(index).compareTo(getLeftChild(index)) < 0) {
                 smallerChildIndex = getRightChildIndex(index);
@@ -128,9 +155,27 @@ public class MyMinHeap implements IMinHeap{
         this.heapArray[b] = temp;
     }
 
+    public void printHeap()
+    {
+        System.err.println("======= Current Heap ======= Size: " + heapSize);
+        for( int i = 0; i < heapSize; i++ )
+        {
+            if(((i+1) & (i)) == 0)
+            {
+                System.err.println();
+            }
+            System.err.print(i);
+            System.err.print(": ");
+            System.err.print(heapArray[i]);
+            System.err.print(", ");
+        }
+        System.err.println();
+        System.err.println();
+    }
+
     // Boolean check given an index, whether that item in the heap has; parent, leftchild, rightchild
     private boolean hasParent(int index) {return (index / 2) > 0;}
-    private boolean hasLeftChild(int index) {return (index * 2) <= this.heapSize;}
+    private boolean hasLeftChild(int index) {return (index * 2) < this.heapSize;}
     private boolean hasRightChild(int index) {return ((index + 1) * 2) < this.heapSize;}
 
     //Given an index location, retrieve the value of its; parent, leftchild, rightchild
