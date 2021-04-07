@@ -52,28 +52,28 @@ public class MergeRuns {
                     if (line_reader2 == null || line_reader2.equals("END_OF_RUN") || line_reader1.compareTo(line_reader2) >= 0) {
                         // L1 >= L2 OR L2 is end of run, OR L2 has nothing left
                         writer.write(line_reader1 + "\n");
+                        System.out.println("Pulled " + line_reader1 + " from L1");
                         line_reader1 = reader1.readLine();
-                        System.out.println("If 1");
-    
+                        
                     } else if (line_reader1 == null || line_reader1.equals("END_OF_RUN") || line_reader2.compareTo(line_reader1) >= 0) {
                         // L2 >= L1 OR L1 is end of run, OR L1 has nothing left
-                        writer.write(line_reader2 +"\n");
+                        writer.write(line_reader2 + "\n");
+                        System.out.println("Pulled " + line_reader2 + " from L2");
                         line_reader2 = reader2.readLine();
-                        System.out.println("If 2");
+                        
                     }
                 } else if (line_reader1.equals("END_OF_RUN") && line_reader2.equals("END_OF_RUN")){
 
                     cycle = (cycle == k_ways) ? 1 : cycle + 1;
                     line_reader1 = reader1.readLine();
                     line_reader2 = reader2.readLine();
+                    writer.write("END_OF_RUN \n");
                     writer.close();
                     writer = new BufferedWriter(new FileWriter((temp_filename + cycle), true));
-                    System.out.println("Else");
-                    System.out.println("LR1: " + line_reader1);
-                    System.out.println("KR2: " + line_reader2);
+                    System.out.println("Both line readers reached EOR.");
                 }
             }
-            
+            writer.close();
 
         } catch (Exception e) {
             System.out.println("Error: " + e);
