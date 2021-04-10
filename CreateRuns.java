@@ -26,6 +26,7 @@ public class CreateRuns {
             String line;
             //While there is still data unread, insert it into a temporary array
             while ((line = reader.readLine()) != null) {
+
                 //If the array is not full yet, add a line of data
                 if (index < runHeapSize) {
                     unsortedLinesArray[index] = line;
@@ -57,9 +58,12 @@ public class CreateRuns {
             String nextLineInput = "p"; // Starting placeholding text to start while loop
             int counter = 1;
 
+            //While this is not the last run to be processed
             while (heap.heapSize != 0) {
 
-                while (heap.heapSize != 0) { // While elements still need to be process (not at the end of the current run)
+                // While elements still need to be processed (not at the end of the current run)
+                while (heap.heapSize != 0) {
+
                     //If smallest in heap can go as the next element in the run
                     if (smallestInHeap.compareTo(previousLineInRun) >= 0) {
                         writer.write(smallestInHeap + "\n");
@@ -67,27 +71,27 @@ public class CreateRuns {
                         counter++;
                         previousLineInRun = smallestInHeap;
                         nextLineInput = reader.readLine();
+
                         //If we are not at the end of the file
                         if (nextLineInput != null) {
                             heap.replace(nextLineInput);
-                            //System.out.println(nextLineInput);
                         }
                         else {
                             heap.clear();
                         }
+
                     //Else, item needs to be put aside
                     } else {
-                        //heap.printHeap();
                         heap.remove();
-                        //System.out.println("Removed from HEAP: " + smallestInHeap);
                     }
                     smallestInHeap = heap.peek();
 
-                    //Terminal viewing heap
+                    //Debugging view on terminal
                     System.out.println("--: [" + nextLineInput + "] has been added to the HEAP");
                     PrintHeap(heap);
                 }
                 
+                //If heapsize is 0 (no more valid elements pushed to run), end the current run.
                 writer.write("END_OF_RUN" + "\n");
                 System.out.println("END_OF_RUN");
                 heap.reset();
@@ -109,7 +113,7 @@ public class CreateRuns {
         }
     }
 
-    //Prints the arrays in heap
+    //Prints current heap elements to system terminal
     public void PrintHeap(MyMinHeap heap) {
         System.out.print("Curent items in heap: total(" + heap.heapSize + ") ");
         for (int f = 0; f < heap.heapCapacity; f++){
