@@ -26,6 +26,7 @@ public class CreateRuns {
             String line;
             //While there is still data unread, insert it into a temporary array
             while ((line = reader.readLine()) != null) {
+
                 //If the array is not full yet, add a line of data
                 if (index < runHeapSize) {
                     unsortedLinesArray[index] = line;
@@ -51,59 +52,57 @@ public class CreateRuns {
             MyMinHeap heap = new MyMinHeap(runHeapSize);
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
             
-            //1st instance
             heap.load(unsortedLinesArray); // Bulk load
-            heap.printHeap();
             String smallestInHeap = heap.peek(); // Peek smallest value at top
             String previousLineInRun = smallestInHeap; //Set smallest in heap as tmp last in run
-            String nextLineInput = "placeholder";
+            String nextLineInput = "p"; // Starting placeholding text to start while loop
+            int counter = 1;
 
-            while (nextLineInput != null) {
+            //While this is not the last run to be processed
+            while (heap.heapSize != 0) {
 
-                while (heap.heapSize != 0) { // While elements still need to be process (not at the end of the current run)
+                // While elements still need to be processed (not at the end of the current run)
+                while (heap.heapSize != 0) {
+
                     //If smallest in heap can go as the next element in the run
                     if (smallestInHeap.compareTo(previousLineInRun) >= 0) {
-                        writer.write(smallestInHeap);
-                        System.out.println("Added to RUN: " + smallestInHeap + " | Current heap size: " + heap.heapSize);
+                        writer.write(smallestInHeap + "\n");
+                        System.out.println(counter + ": [" + smallestInHeap + "] has been added to the RUN");
+                        counter++;
                         previousLineInRun = smallestInHeap;
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// I'm pretty sure these three steps are the culprit for the null pointer exception. When the file reaches the end, nextlineinput is set to null.
-// when ever we make a reference to a null object, it will cause an exception. 
                         nextLineInput = reader.readLine();
-                        heap.replace(nextLineInput);
-                        System.out.println("Added to HEAP: " + nextLineInput);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+                        //If we are not at the end of the file
+                        if (nextLineInput != null) {
+                            heap.replace(nextLineInput);
+                        }
+                        else {
+                            heap.clear();
+                        }
+
+                    //Else, item needs to be put aside
                     } else {
-                        heap.printHeap();
                         heap.remove();
-                        System.out.println("Removed from HEAP: " + smallestInHeap);
                     }
                     smallestInHeap = heap.peek();
+
+                    //Debugging view on terminal
+                    System.out.println("--: [" + nextLineInput + "] has been added to the HEAP");
+                    PrintHeap(heap);
                 }
-
-                writer.write("(RUN COMPLETED)" + "\n");
-                System.out.println("(RUN COMPLETED)");
-
+                
+                //If heapsize is 0 (no more valid elements pushed to run), end the current run.
+                writer.write("END_OF_RUN" + "\n");
+                System.out.println("END_OF_RUN");
                 heap.reset();
+                PrintHeap(heap);
+
+                //Reset the smallest in heap 
                 smallestInHeap = heap.peek();
                 previousLineInRun = smallestInHeap;
-
-                // BREAK CASE: If the next inputted line is null, we are at the end of the file
-                if (nextLineInput == null) {
-                    for (int i = 0; i < heap.heapSize; i++) {
-                        writer.write(smallestInHeap);
-                        System.out.println(smallestInHeap);
-                        heap.remove();
-                        smallestInHeap = heap.peek();
-                        i++;
-                    }
-                    writer.write("(RUN COMPLETED)" + "\n");
-                    break;
-                }
             }
             
+            //Once there are no more lines to input
             writer.flush();
             writer.close();
             reader.close();
@@ -112,30 +111,15 @@ public class CreateRuns {
             e.printStackTrace();
             System.err.println("Error occured: " + e);
         }
-            /*1st Iteration (Heap is empty): 
-            - Fill the heap using load()
-            - get the input stream ready for next item
-            */
+    }
 
-            /*IF the current smallest in heap is more than or equal to the last item added to the run
-                - Write it to the current run
-                - Save the top of the heap we just wrote to the run
-                - Get the next line from the Stream
-                - Replace the heap top with the next line and downheap
-                    - Replace needs to check if the next item is a null
-                        - If so, it must be swapped to the back of the heap then heapSize--
-            */
-            /*ELSE the smallest line in heap is smaller than the line of the previous run
-                - Remove (Put aside/Quarantine) the line to the back of the heap (decrement heap size)
-            */
-            //Reset the variables holding previous in run and top of heap
-
-            /*IF the size of the heap is 0 then a run is completed - pause the program
-                - Add a run completed marker
-                - Reset the heap (get rid of nulls, reset the size)
-                - Perform heap to get the items back into order
-                - Continue next iteration of the while loop
-
-            */
+    //Prints current heap elements to system terminal
+    public void PrintHeap(MyMinHeap heap) {
+        System.out.print("Curent items in heap: total(" + heap.heapSize + ") ");
+        for (int f = 0; f < heap.heapCapacity; f++){
+            System.out.print("[" + f + "]:" + heap.heapArray[f] + ", ");
+        }
+        System.out.println("");
+        System.out.println("");
     }
 }
