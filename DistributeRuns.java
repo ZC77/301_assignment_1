@@ -1,8 +1,12 @@
+//Name: Zachary Cui - ID: 1364880
+//Name: Bhavit Wadhwa - ID: 1516846
+
 import java.io.*;
 
 public class DistributeRuns {
 
     int numOfFiles = 2;
+    public int iterations = 0;
     // Constructor
     public DistributeRuns (int numOfDistributedFiles) {
         if (numOfDistributedFiles >= 1 && numOfDistributedFiles < 100) {
@@ -29,6 +33,7 @@ public class DistributeRuns {
             while ((line = reader.readLine()) != null) {
                 
                 if (line.equals("END_OF_RUN")) { // This needs to match how we seperate runs in the output of create_runs
+                    iterations++;
                     writer.write(line + "\n");
                     writer.close();
                     cycle = (cycle == numOfFiles) ? 1 : cycle + 1;
@@ -44,5 +49,4 @@ public class DistributeRuns {
             System.out.println("Error: " + e);
         }
     }
-
 }

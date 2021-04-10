@@ -1,3 +1,6 @@
+//Name: Zachary Cui - ID: 1364880
+//Name: Bhavit Wadhwa - ID: 1516846
+
 public interface IMinHeap {
     
     public void insert(String x);

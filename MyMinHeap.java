@@ -1,3 +1,6 @@
+//Name: Zachary Cui - ID: 1364880
+//Name: Bhavit Wadhwa - ID: 1516846
+
 import java.util.Arrays;
 
 public class MyMinHeap implements IMinHeap{
