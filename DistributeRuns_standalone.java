@@ -1,3 +1,6 @@
+//Name: Zachary Cui - ID: 1364880
+//Name: Bhavit Wadhwa - ID: 1516846
+
 import java.io.*;
 
 public class DistributeRuns_standalone {
@@ -19,8 +22,8 @@ public class DistributeRuns_standalone {
             String filename = "RunFile_";
             int cycle = 1; 
 
-            for (int i = 1; i <= drs.numOfFiles; i++) {
-                String next = filename + i;
+            for (int i = 1; i <= drs.numOfFiles; i++) { // Create 2 temp files for use later
+                String next = filename + i; 
                 writer = new BufferedWriter(new FileWriter(next));
                 writer.close();
             }
