@@ -27,7 +27,7 @@ Where ... represents the numerous lines of text being added, and END_OF_RUNS bei
 
 ## Issue with Merge Runs:
 - Merge runs must be tested by running DistributeRuns_standalone to create the distributed files. 
-- Depending on size of your test file, some strings may be missing. This behaviour was observed with a test file containing 180000 lines of text.
+- Depending on size of your test file, some strings may be missing. This behaviour was observed with a test file containing 18000 lines of text.
 - Please branch 'Zachary_fixed_merge'
 
 
