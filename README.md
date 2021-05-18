@@ -26,9 +26,9 @@ Where ... represents the numerous lines of text being added, and END_OF_RUNS bei
 
 
 ## Issue with Merge Runs:
-- Firstly, Merge runs must be tested by running DistributeRuns_standalone to create the distributed files. 
-- From there, 2 files will be created representing the results of the 1st merge. It does not attempt to merge again. 
-- Therefore, our mergeRuns implementation only merges once.
+- Merge runs must be tested by running DistributeRuns_standalone to create the distributed files. 
+- Depending on size of your test file, some strings may be missing. This behaviour was observed with a test file containing 180000 lines of text.
+- Please branch 'Zachary_fixed_merge'
 
 
 
